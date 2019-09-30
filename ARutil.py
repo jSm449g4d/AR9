@@ -1,4 +1,4 @@
-#utility version:0.0.6
+#utility version:0.0.7
 #9th
 
 import os
@@ -8,26 +8,26 @@ import io
 def mkdiring(input):
     arr=input.split("/");input=""
     for inp in arr:
-        if not os.path.exists(input+inp+"/"):os.mkdir(input+inp);
+        if not os.path.exists(input+inp+"/"):os.mkdir(input+inp)
         input+=inp+"/"
-    return input
+    return input.rstrip("/")
 
 def outYurl(output,url):
-    if output=="":return url.translate(str.maketrans('*:/\?\"\'\\','________'))
-    return output+"/"+url.translate(str.maketrans('*:/\?\"\'\\','________'))
+    if output=="":return url.translate(str.maketrans('*:/?\"\'\\','________'))
+    return output+"/"+url.translate(str.maketrans('*:/?\"\'\\','________'))
 
 def rootYrel(root,rel):#like as os.path.join
+    root=root.rstrip("/")
+    rel=rel.lstrip("/")
     if root=="":return rel
-    if(root[-1:]=="/"):root=root.rstrip("/")
     if rel=="":return root
-    if(rel[0]=="/"):rel=rel.lstrip("/")
     return root+"/"+rel
 
-def ffzk(input):#all file list on input folder
+def ffzk(input_dir):#Relative directory for all existing files
     imgname_array=[]
-    for fd_path, sb_folder, sb_file in os.walk(input):
+    for fd_path, _, sb_file in os.walk(input_dir):
         for fil in sb_file:imgname_array.append(fd_path + '/' + fil)
-    if os.path.isfile(input):imgname_array.append(input)
+    if os.path.isfile(input_dir):imgname_array.append(input_dir)
     return imgname_array
 
 #For processing that may stop,such as request
@@ -36,7 +36,7 @@ def ffzk(input):#all file list on input folder
 def tryex(ID,interval,wait,func,*args,**params):
     idnewflg=1;time.sleep(interval)
     while idnewflg:
-        try:ret=func(*args,**params);
+        try:ret=func(*args,**params)
         except:print("errID:"+str(ID)+" wait...");time.sleep(wait);continue
         idnewflg=0
     return ret
@@ -64,7 +64,6 @@ def storer(input):
             or car=='◇' or car=='※' or car==':' or car =='‥' or car=='↓' or car=='＊'\
             or car=='▼' or car=='◎' or car=='③' or car=='②' or car=='①'\
             or car=='/' or car=='●' or car=='▲'or car=='〇'or car=='☆':continue
-        io_.write(car);spaceflag=0;Ynflag=0;
+        io_.write(car);spaceflag=0;Ynflag=0
     output = io_.getvalue();io_.close()
     return output
-
