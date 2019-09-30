@@ -17,11 +17,12 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(name='AR9',
-      version='0.0.1',
+      version='0.0.2',
       description='Distribution test',
       author='',
       author_email='',
       packages=find_packages(),
       url='',
       py_modules=['ARutil','ARSLR'],
+      install_requires=[],
      )
