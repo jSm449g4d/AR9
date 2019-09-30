@@ -5,3 +5,5 @@ To learn how to handle github
 pip install git+https://github.com/jSm449g4d/AR9
 ### Uninstall
 pip uninstall AR9
+### License
+MIT
