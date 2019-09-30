@@ -7,17 +7,14 @@ pip install git+https://github.com/jSm449g4d/AR9
 
 ###Uninstall
 pip uninstall AR9
-
-###Update
-plz drug and drop new file.
-maybe,the files on github are up-to-date.
 """
 
-from setuptools import setup
-from setuptools import find_packages
+from setuptools import setup,find_packages
+from codecs import open
+from os import path
 
 setup(name='AR9',
-      version='0.0.3',
+      version='0.0.4',
       description='Distribution test',
       author='',
       author_email='',
