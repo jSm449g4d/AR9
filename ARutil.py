@@ -25,6 +25,7 @@ def rootYrel(root,rel):#like as os.path.join
 
 def ffzk(input_dir):#Relative directory for all existing files
     imgname_array=[]
+    input_dir=input_dir.rstrip("\"").lstrip("\"").maketranse("\\","/")
     for fd_path, _, sb_file in os.walk(input_dir):
         for fil in sb_file:imgname_array.append(fd_path + '/' + fil)
     if os.path.isfile(input_dir):imgname_array.append(input_dir)
