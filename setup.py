@@ -14,7 +14,7 @@ from codecs import open
 from os import path
 
 setup(name='AR9',
-      version='0.0.4',
+      version='0.0.5',
       description='Distribution test',
       author='',
       author_email='',
