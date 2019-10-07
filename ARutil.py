@@ -18,8 +18,8 @@ def mkdiring(input):
     return input.rstrip("/")
 
 def outYurl(output,url):
-    if output=="":return url.translate(str.maketrans('*:/?\"\'\\','________'))
-    return output+"/"+url.translate(str.maketrans('*:/?\"\'\\','________'))
+    if output=="":return url.translate(str.maketrans('*:/?\"\'\\','_______'))
+    return output+"/"+url.translate(str.maketrans('*:/?\"\'\\','_______'))
 
 def rootYrel(root,rel):#like as os.path.join
     root=root.rstrip("/")
@@ -74,7 +74,7 @@ def storer(input):
     return output
 
 #Rough Image Scraper
-def RISdler(url,output="./RIS_image",interval=15,urlfilter="",last_s_omit=1,minsize=10000,ETI="ETtlId.json",headers={}):
+def RIS(url,output="./RIS_image",interval=15,urlfilter="",last_s_omit=1,minsize=10000,ETI="ETtlId.json",headers={}):
     print("access:",url,"\nThe miminum size is ",minsize,"[Byte]\nThe interval time is ",interval,"[s]")
     if interval<3.0:print('plz set interval time more than 3.0[s]');return
     titles={};output2=outYurl(output,url)
