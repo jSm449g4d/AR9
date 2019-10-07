@@ -4,6 +4,9 @@
 import os
 import time
 import io
+from bs4 import BeautifulSoup
+import certifi
+import urllib3
 
 def mkdiring(input):
     arr=input.split("/");input=""
@@ -67,3 +70,37 @@ def storer(input):
         io_.write(car);spaceflag=0;Ynflag=0
     output = io_.getvalue();io_.close()
     return output
+
+#Rough Image Scraper
+def RISdler(url,output="./RIS_image",interval=15,urlfilter="",last_s_omit=1,minsize=10000,ETI="ETtlId.json",headers={}):
+    print("access:",url,"\nThe miminum size is ",minsize,"[Byte]\nThe interval time is ",interval,"[s]")
+    if interval<3.0:print('plz set interval time more than 3.0[s]');return
+    titles={};output2=outYurl(output,url)
+    if 150<len(output2):print("output folder directory is too large(150<len)");return
+    mkdiring(output2)
+    https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
+    html=tryex("unable to access url",interval,600,https.request,'GET',url)
+    soup = BeautifulSoup(html.data,"html.parser")
+    #index_file_update
+    try:with open(outYurl(output,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
+    if outYurl("",url) in titles:print("arleady exist in index file");titles.clear();return
+    titles[outYurl("",url)]=soup.head.title.text
+    with open(outYurl(output,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
+    titles.clear()
+    #Image_files_getting
+    for link in soup.find_all("img"):
+        target=""
+        if link.get("src").endswith(".jpg"):target=link.get("src")
+        elif link.get("src").endswith(".png"):target=link.get("src")
+        else:continue
+        if urlfilter not in target:continue
+        if last_s_omit:target=target.replace("s.jpg",".jpg").replace("s.png",".png")
+        print("downloading:",target);time.sleep(interval)
+        try:re=https.request('GET',target)
+        except:print("failed!");continue
+        if sys.getsizeof(re.data)<minsize:print("size is less than the minimum");continue
+        with open(output2+'/'+target.split('/')[-1], 'wb') as f:f.write(re.data)
+    #if there is not file in folder.
+    if len(ffzk(output2))==0:os.removedirs(output2);print("rm -rf ",output2)
+    print("RIS_complete")
+    
