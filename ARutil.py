@@ -110,9 +110,10 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
     print("RIS_complete")
 
 #sitemap_loader
-def SML(url,interval=3,headers={},recursion=1):
+def SML(url,interval=3,headers={},recursion=1,fromurl=""):
     ret=[]
     if url.endswith(".xml")==False:return ret
+    if fromurl!="":print("from:",fromurl)
     print("access:",url,"\nThe interval time is ",interval,"[s]")
     if interval<3.0:print('plz set interval time more than 3.0[s]');return ret
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
@@ -122,5 +123,5 @@ def SML(url,interval=3,headers={},recursion=1):
         ret.append(soup.findAll('loc')[i].text)
     #recursion
     if recursion:
-        for i in ret:ret.extend(SML(i,interval,headers,recursion=1))
-    print(ret);return ret
+        for i in ret:ret.extend(SML(i,interval,headers,recursion=1,fromurl=url))
+    return ret
