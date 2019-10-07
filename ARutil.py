@@ -110,7 +110,7 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
     print("RIS_complete")
 
 #sitemap_loader
-def SML(url,interval=3,headers={}):
+def SML(url,interval=3,headers={},recursion=1):
     ret=[]
     if url.endswith(".xml")==False:return ret
     print("access:",url,"\nThe interval time is ",interval,"[s]")
@@ -120,8 +120,7 @@ def SML(url,interval=3,headers={}):
     soup = BeautifulSoup(html.data,"html.parser")
     for i in range(len(soup.findAll('loc'))):
         ret.append(soup.findAll('loc')[i].text)
-        print(soup.findAll('loc')[i].text)
-#    if soup.tbody!=None:
-#        for i in range(len(soup.tbody.findAll('a'))):
-#            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
+    #recursion
+    if recursion:
+        for i in ret:ret.extend(SML(i,interval,headers,recursion=1))
     print(ret);return ret
