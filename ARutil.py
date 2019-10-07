@@ -126,7 +126,7 @@ def SML(url,interval=3,headers={},recursion=1,fromurl=""):
         for i in ret:ret.extend(SML(i,interval,headers,recursion=1,fromurl=url))
     return ret
 
-def ETM(dir):
+def ETM(dir,ETI="ETtlId.json"):
     titles={}
     if os.path.isfile(outYurl(dir,ETI)):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
@@ -134,5 +134,5 @@ def ETM(dir):
     for fil in fils:
         if len(ffzk(rootYrel(dir,fil)))==0:os.removedirs(rootYrel(dir,fil));print("rm -rf ",rootYrel(dir,fil))
     for title in titles:
-        if title not in fils:sprint("erase from index:",title);titles.pop(title)
+        if title not in fils:print("erase from index:",title);titles.pop(title)
     
