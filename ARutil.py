@@ -2,8 +2,10 @@
 #9th
 
 import os
+import sys
 import time
 import io
+import json
 from bs4 import BeautifulSoup
 import certifi
 import urllib3
@@ -82,7 +84,8 @@ def RISdler(url,output="./RIS_image",interval=15,urlfilter="",last_s_omit=1,mins
     html=tryex("unable to access url",interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
     #index_file_update
-    try:with open(outYurl(output,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
+    if os.path.isfile(outYurl(output,ETI)):
+        with open(outYurl(output,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
     if outYurl("",url) in titles:print("arleady exist in index file");titles.clear();return
     titles[outYurl("",url)]=soup.head.title.text
     with open(outYurl(output,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
@@ -103,4 +106,3 @@ def RISdler(url,output="./RIS_image",interval=15,urlfilter="",last_s_omit=1,mins
     #if there is not file in folder.
     if len(ffzk(output2))==0:os.removedirs(output2);print("rm -rf ",output2)
     print("RIS_complete")
-    

@@ -21,5 +21,5 @@ setup(name='AR9',
       packages=find_packages(),
       url='',
       py_modules=['ARutil','ARSLR'],
-      install_requires=[],
+      install_requires=['certifi','urllib3','beautifulsoup4'],
      )
