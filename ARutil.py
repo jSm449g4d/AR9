@@ -118,7 +118,7 @@ def SML(url,interval=3,headers={}):
     soup = BeautifulSoup(html.data,"html.parser")
     for i in range(len(soup.findAll('loc'))):
         ret.append(soup.findAll('loc')[i].string)
-    if soup.tbody!=None:
-        for i in range(len(soup.tbody.findAll('a'))):
-            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
+#    if soup.tbody!=None:
+#        for i in range(len(soup.tbody.findAll('a'))):
+#            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
     print(ret);return ret
