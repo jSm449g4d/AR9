@@ -132,7 +132,7 @@ def ETM(dir,ETI="ETtlId.json"):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
     fils=ffzk(dir)
     for fil in fils:
-        if len(ffzk(rootYrel(dir,fil)))==0:os.removedirs(rootYrel(dir,fil));print("rm -rf ",rootYrel(dir,fil))
+        if len(ffzk(fil))==0:os.removedirs(fil);print("rm -rf ",fil)
     for title in titles:
         if title not in fils:print("erase from index:",title);titles.pop(title)
     
