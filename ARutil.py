@@ -133,8 +133,8 @@ def ETM(dir,ETI="ETtlId.json"):
     fils=ffzk(dir)
     for fil in fils:
         if len(ffzk(fil))==0:os.removedirs(fil);print("rm -rf ",fil)
-        if titles not in fil.sprit("/")[-1]:
-            print("erase from index:",fil.sprit("/")[-1]);titles.pop(fil.sprit("/")[-1])
+        if titles not in fil.split("/")[-1]:
+            print("erase from index:",fil.split("/")[-1]);titles.pop(fil.split("/")[-1])
 
 
     
