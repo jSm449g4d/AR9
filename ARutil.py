@@ -110,14 +110,15 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
 #sitemap_loader
 def SML(url,interval=3,headers={}):
     ret=[]
+    if url.endswith(".xml")==False:return ret
     print("access:",url,"\nThe interval time is ",interval,"[s]")
     if interval<3.0:print('plz set interval time more than 3.0[s]');return ret
-    if url.endswith(".xml")==False:return ret
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
     html=tryex(0,interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
     for i in range(len(soup.findAll('loc'))):
         ret.append(soup.findAll('loc')[i].string)
-    for i in range(len(soup.tbody.findAll('a'))):
-        ret.append(soup.tbody.findAll('a')[i].attrs["href"])
+    if soup.tbody!=None:
+        for i in range(len(soup.tbody.findAll('a'))):
+            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
     print(ret);return ret
