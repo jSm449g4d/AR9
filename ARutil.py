@@ -78,15 +78,17 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
     print("access:",url,"\nThe miminum size is ",minsize,"[Byte]\nThe interval time is ",interval,"[s]")
     if interval<3.0:print('plz set interval time more than 3.0[s]');return
     titles={};output2=outYurl(output,url)
+    #index_file_load
+    if os.path.isfile(outYurl(output,ETI)):
+        with open(outYurl(output,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
+    if outYurl("",url) in titles:print("arleady exist in index file");titles.clear();return
+    #access url
     if 150<len(output2):print("output folder directory is too large(150<len)");return
     mkdiring(output2)
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
     html=tryex("unable to access url",interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
     #index_file_update
-    if os.path.isfile(outYurl(output,ETI)):
-        with open(outYurl(output,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
-    if outYurl("",url) in titles:print("arleady exist in index file");titles.clear();return
     titles[outYurl("",url)]=soup.head.title.text
     with open(outYurl(output,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
     titles.clear()
@@ -116,9 +118,10 @@ def SML(url,interval=3,headers={}):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
     html=tryex(0,interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
-#    for i in range(len(soup.findAll('loc'))):
-#        ret.append(soup.findAll('loc')[i].string)
-    if soup.tbody!=None:
-        for i in range(len(soup.tbody.findAll('a'))):
-            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
+    for i in range(len(soup.findAll('loc'))):
+        ret.append(soup.findAll('loc')[i].text)
+        print(soup.findAll('loc')[i].text)
+#    if soup.tbody!=None:
+#        for i in range(len(soup.tbody.findAll('a'))):
+#            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
     print(ret);return ret
