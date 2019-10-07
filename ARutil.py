@@ -116,9 +116,9 @@ def SML(url,interval=3,headers={}):
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
     html=tryex(0,interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
-    for i in range(len(soup.findAll('loc'))):
-        ret.append(soup.findAll('loc')[i].string)
-#    if soup.tbody!=None:
-#        for i in range(len(soup.tbody.findAll('a'))):
-#            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
+#    for i in range(len(soup.findAll('loc'))):
+#        ret.append(soup.findAll('loc')[i].string)
+    if soup.tbody!=None:
+        for i in range(len(soup.tbody.findAll('a'))):
+            ret.append(soup.tbody.findAll('a')[i].attrs["href"])
     print(ret);return ret
