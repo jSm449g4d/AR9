@@ -88,10 +88,6 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
     https = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where(),headers=headers)
     html=tryex("unable to access url",interval,600,https.request,'GET',url)
     soup = BeautifulSoup(html.data,"html.parser")
-    #index_file_update
-    titles[outYurl("",url)]=soup.head.title.text
-    with open(outYurl(output,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
-    titles.clear()
     #Image_files_getting
     for link in soup.find_all("img"):
         target=""
@@ -107,6 +103,10 @@ def RIS(url,output="./RIS_image",interval=3,urlfilter="",last_s_omit=1,minsize=1
         with open(output2+'/'+target.split('/')[-1], 'wb') as f:f.write(re.data)
     #if there is not file in folder.
     if len(ffzk(output2))==0:os.removedirs(output2);print("rm -rf ",output2)
+    #index_file_update
+    titles[outYurl("",url)]=soup.head.title.text
+    with open(outYurl(output,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
+    titles.clear()
     print("RIS_complete")
 
 #sitemap_loader
@@ -125,3 +125,14 @@ def SML(url,interval=3,headers={},recursion=1,fromurl=""):
     if recursion:
         for i in ret:ret.extend(SML(i,interval,headers,recursion=1,fromurl=url))
     return ret
+
+def ETM(dir):
+    titles={}
+    if os.path.isfile(outYurl(dir,ETI)):
+        with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
+    fils=ffzk(dir)
+    for fil in fils:
+        if len(ffzk(rootYrel(dir,fil)))==0:os.removedirs(rootYrel(dir,fil));print("rm -rf ",rootYrel(dir,fil))
+    for title in titles:
+        if title not in fils:sprint("erase from index:",title);titles.pop(title)
+    
