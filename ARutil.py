@@ -135,7 +135,7 @@ def ETM(dir,ETI="ETtlId.json"):
 
     for title in titles.keys():
         if title not in fils:
-            print("Not exist",title)
+            print("rm -rf ",title,":not exist");titles.pop(title)
 
 
     
