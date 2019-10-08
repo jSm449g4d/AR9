@@ -131,7 +131,7 @@ def ETM(dir,ETI="ETtlId.json"):
     titles={}
     if os.path.isfile(outYurl(dir,ETI)):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
-    fils=listdir(dir)
+    fils=os.listdir(dir)
 
     for title in titles.keys():
         if title not in fils:
