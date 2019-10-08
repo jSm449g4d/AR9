@@ -135,7 +135,7 @@ def SIM(dir,ETI="ETtlId.json"):
     for fil in fils:
         if os.path.isfile(fil)==False and len(ffzk(fil))==0:
             print("rm -rf ",fil,":doesnt have any file");os.removedirs(fil)
-        if os.path.isfile(fil)==False and fil not in titles.key():
+        if os.path.isfile(fil)==False and fil not in titles.keys():
             print("rm -rf ",fil,":doesnt exist in index");os.removedirs(fil)
     print("all folders are valid...");fils=os.listdir(dir)
     for title in list(titles.keys()):

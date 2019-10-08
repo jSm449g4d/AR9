@@ -1,5 +1,5 @@
 # AR9
-Convenience goods
+To learn how to handle github
 
 ### Install
 pip install git+https://github.com/jSm449g4d/AR9
