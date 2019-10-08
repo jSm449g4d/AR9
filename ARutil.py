@@ -131,13 +131,15 @@ def SIM(dir,ETI="ETtlId.json"):
     titles={}
     if os.path.isfile(outYurl(dir,ETI)):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
-    fils=os.listdir(dir);titleskeys=titles.keys()
+    fils=os.listdir(dir)
     for fil in fils:
         if os.path.isfile(fil)==False and len(ffzk(fil))==0:
             print("rm -rf ",fil,":doesnt have any file");os.removedirs(fil)
-    fils=os.listdir(dir)
-    for title in titleskeys:
-        if title not in fils:print("rm -rf ",title,":not exist");titles.pop(title)
+    print("all folders are valid...");fils=os.listdir(dir)
+    for title in list(titles.keys()):
+        if title not in fils:print("rm -rf ",title,":doesnt exist");titles.pop(title)
+    with open(outYurl(dir,ETI), 'w',encoding='utf-8') as fp:json.dump(titles,fp, ensure_ascii=False)
+    titles.clear();print("SIM completed")
 
 
     
