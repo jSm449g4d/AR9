@@ -131,6 +131,7 @@ def SIM(dir,ETI="ETtlId.json"):
     titles={}
     if os.path.isfile(outYurl(dir,ETI)):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
+    else:print("cant find index_file");return
     fils=os.listdir(dir)
     for fil in fils:
         if os.path.isfile(fil)==False and len(ffzk(fil))==0:
