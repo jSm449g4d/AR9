@@ -126,15 +126,16 @@ def SML(url,interval=3,headers={},recursion=1,fromurl=""):
         for i in ret:ret.extend(SML(i,interval,headers,recursion=1,fromurl=url))
     return ret
 
+#*****Under_Construction*****
 def ETM(dir,ETI="ETtlId.json"):
     titles={}
     if os.path.isfile(outYurl(dir,ETI)):
         with open(outYurl(dir,ETI), 'r',encoding='utf-8') as fp:titles.update(json.load(fp))
-    fils=ffzk(dir)
-    for fil in fils:
-        if len(ffzk(fil))==0:os.removedirs(fil);print("rm -rf ",fil)
-        if titles not in fil.split("/")[-1]:
-            print("erase from index:",fil.split("/")[-1]);titles.pop(fil.split("/")[-1])
+    fils=listdir(dir)
+
+    for title in titles.keys():
+        if title not in fils:
+            print("Not exist",title)
 
 
     
